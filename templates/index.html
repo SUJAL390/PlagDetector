@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plagiarism Detector</title>
+    <style>
+        @keyframes backgroundCycle {
+            0% { background: #ff9a9e; /* Soft pink */ }
+            14% { background: #ff6f61; /* Gradient orange-red */ }
+            28% { background: #ffeb3b; /* Bright yellow */ }
+            42% { background: #4caf50; /* Green */ }
+            57% { background: #2196f3; /* Blue */ }
+            71% { background: #9c27b0; /* Purple */ }
+            85% { background: #f44336; /* Red */ }
+            100% { background: #ffffff; /* White */ }
+        }
+
+        @keyframes containerColorCycle {
+            0% { background: #ffffff; /* White */ }
+            14% { background: #ffccbc; /* Light orange */ }
+            28% { background: #e3f2fd; /* Light blue */ }
+            42% { background: #d0f8ce; /* Light green */ }
+            57% { background: #d1c4e9; /* Light purple */ }
+            71% { background: #f8bbd0; /* Light pink */ }
+            85% { background: #ffcdd2; /* Light red */ }
+            100% { background: #ffffff; /* White */ }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); }
+            100% { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #ff9a9e; /* Starting background color */
+            animation: backgroundCycle 14s infinite; /* 14 seconds for complete cycle */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 550px;
+            background: #ffffff; /* Default white container */
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            border: 1px solid #dcdcdc;
+            animation: containerColorCycle 14s infinite, pulse 3s infinite, glow 1.5s infinite;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #6a1b9a; /* Default purple */
+            font-size: 2.5em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        h1:hover {
+            color: #8e24aa; /* Lighter purple on hover */
+            transform: scale(1.05);
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #b3e5fc; /* Light blue border */
+            border-radius: 15px;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1em;
+            resize: vertical;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #00acc1; /* Teal on focus */
+            box-shadow: 0 0 10px rgba(0, 172, 193, 0.3);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff6f61, #de6262); /* Gradient orange-red button */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #de6262, #ff6f61); /* Reversed gradient */
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #cfd9df, #e2ebf1); /* Soft blue gradient */
+            color: #1e88e5; /* Bright blue text */
+            font-size: 1.1em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            textarea {
+                height: 120px;
+            }
+
+            button {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plagiarism Detector</h1>
+        <form action="/detect" method="post">
+            <textarea name="text" placeholder="Enter text here..." required></textarea>
+            <button type="submit">Check for Plagiarism</button>
+        </form>
+        {% if result %}
+            <div class="result">{{ result }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
